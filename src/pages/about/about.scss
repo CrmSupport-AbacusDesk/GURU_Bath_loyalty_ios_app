@@ -1,0 +1,30 @@
+.perha > ul > h6 {
+    padding-top: 10px;
+}
+
+.perha{
+    p{
+        font-size: 14px;
+        line-height: 22px;
+        margin-bottom: 16px !important;
+    }
+
+    h6{
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 10px !important;
+    }
+}
+
+ul.list-circel li, ul.bold-item li{
+    font-size: 13px;
+}
+
+ul.list-circel li{
+    list-style: disc;
+    margin-left: 24px !important;
+}
+ul.bold-item li{
+    font-weight: 600;
+    margin-left: 24px !important;
+}

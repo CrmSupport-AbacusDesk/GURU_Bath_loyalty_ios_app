@@ -1,0 +1,42 @@
+   
+<ion-header>
+    <ion-navbar class="h80">
+        <div class="header-logo" >
+            <img src="assets/imgs/logo.png" alt="">
+        </div>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+	<div class="main-login">
+		<form  #f="ngForm" (ngSubmit)="f.form.valid && onSubmitUserOtpHandler()" class="form-center">
+			<div class="mobile-login">
+				<div class="text">
+					<p>{{'Enter your 6 digit number that sent to' | translate}}</p>
+					<span class="blue-color">+91 {{mobileNo}}</span>
+				</div>
+				<div class="input-section">
+					<div class="input-adjust m16 mb0">
+						<input class="pl16 radius-none" type="tel" name="otp" placeholder="{{'Enter OTP' | translate}}" #otp="ngModel" [(ngModel)]="data.otp" (keypress)="dbService.onMobileValidateHandler($event)" (ngModelChange)="onValidateUserOtpHandler()" min="0" maxlength="6" minlength="6" required>
+						<div class="eror" *ngIf="!isOtpValid && otp?.touched">
+							<p>{{'Wrong OTP value' | translate}}</p>
+						</div>
+					</div>
+					<div class="resend opacity" *ngIf="resendActiveClass==true">
+						<a >{{'New OTP resent to be available in seconds' | translate}} {{ otpInputMaxTime }}</a>
+					</div>
+					<div class="resend " color="primary" *ngIf="resendActiveClass==false">
+						<a (click)="onResendOtpHandler()">{{'Resend' | translate}}</a>
+					</div>
+				</div>
+
+				<div class="login-btn" >
+					<button [disabled]="data.otp != smsOTP">{{'Submit' | translate}}</button>
+				</div>
+
+			</div>
+		</form>
+
+
+	</div>
+</ion-content>

@@ -1,0 +1,34 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>aboutus-modal</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<div class="main-modal">
+		<!-- <ng-cotainer> -->
+			<div class="modal-box" *ngIf="user_type === 'Dealer' ">
+				<p>Dear <span>({{name.first_name}})</span></p>
+				<p>Thank you for submitting your application to register as Dealer with Guru Bath Fittings APP.  Your request to access the App is under review process.  You will receive a confirmation call from </p>
+				<a class="blue" href="tel:8527045250">+91 8527045250</a>or
+				From Guru Bath Fittings Team
+			   <p>	
+				   <a class="blue" href="mailto:gurufittings@gmail.com">gurufittings@gmail.com</a>
+			   </p>
+			</div>
+			<div class="modal-box" *ngIf="user_type === 'Plumber' ">
+				<p>Dear <span>({{name.first_name}})</span></p>
+				<p>Thank you for submitting your request to register as Plumber with Guru Bath Fittings APP.  Your request to access the App is under review process.  You will be notified with a call from</p>
+				<a class="blue" href="tel:8527045250">+91 8527045250</a>or
+				<p>once the dealer/distributor referred by you acknowledges your application.</p>
+				From Guru Bath Fittings Team
+		  	    <p>	<a class="blue" style="color: blue;" href="mailto:gurufittings@gmail.com">gurufittings@gmail.com</a></p>
+			</div>
+		<!-- </ng-cotainer> -->
+		
+		<div class="modal-cls" (click)="gotoHomePage()">
+			<i class="material-icons">cancel</i>
+		</div>
+	</div>	
+</ion-content>

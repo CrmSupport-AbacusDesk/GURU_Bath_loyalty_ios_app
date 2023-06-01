@@ -1,0 +1,36 @@
+page-notification {
+
+
+    .notification-list{
+        border-bottom: 1px solid #ccc;
+        padding: 5px 0px;
+        margin: 0 auto;
+        padding: 5px 16px;
+
+
+
+        p{
+            font-size: 15px;
+            line-height: 24px;
+        }
+
+        span{
+            width: 100%;
+            text-align: right;
+            display: block;
+            font-size: 12px;
+            color: #939393;
+        }
+
+        &:last-child{
+            border-bottom: 0px;
+        }
+
+        &.new{
+            background: #ebf7ff;
+        }
+    }
+
+
+
+}

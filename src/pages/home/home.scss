@@ -1,0 +1,83 @@
+page-home {
+    
+    .main-box.sidespace{
+
+        margin-left: 24px;
+        margin-right: 24px;
+        width: 100% !important;
+    }
+    span.badge {
+        position: absolute;
+        top: 0px;
+        right: -5px;
+        font-size: 11px;
+        background: #ff0000;
+        padding: 2px;
+        border-radius: 10px;
+    }
+    
+    .user {
+        display: grid;
+        grid-template-columns: 60px 1fr;
+        grid-column-gap: 10px;
+        padding: 16px 16px 0px 16px;
+        
+        .pic {
+            width: 55px;
+            height: 55px;
+            background: #f9f9f9;
+            border-radius: 100%;
+            line-height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1.5px solid #ccc;
+
+            
+            img{
+                height: 100%;
+                object-fit: cover;
+            }
+            
+        }
+        
+        
+        .content{
+            
+            position: relative;
+            padding-right: 20px;
+            
+            h4{
+                font-size: 18px;
+                font-weight: 700;
+                line-height: 24px;
+                padding-bottom: 0px;
+                color: #f1121c;
+            }
+            
+            span{
+                font-size: 12px;
+                color: #0a0a0a;
+            }
+            
+            &:after{
+                content: '';
+                position: absolute;
+                top: 50%;
+                right: 0;
+                transform: translateY(-50%);
+                background: url('../../assets/imgs/right-arrow.svg') no-repeat center;
+                width: 15px;
+                height: 15px;
+            }
+        }
+        
+        
+        &.single{
+            grid-template-columns: 1fr;
+        }
+        
+    }
+    
+}

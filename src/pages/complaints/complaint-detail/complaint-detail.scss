@@ -1,0 +1,28 @@
+page-complaint-detail {
+    
+    
+    .basic-table{
+        box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        table{
+            width: 100%;
+            table-layout: fixed;
+            box-sizing: border-box;
+            border-collapse: collapse;
+            
+            tr{
+                td{
+                    padding: 8px;
+                    font-size: 12px;
+                }
+                
+                border-bottom: 1px solid #eeec;
+
+                &:last-child{
+                    border-bottom: 0px;
+                }
+            }
+        }
+    }
+    
+}

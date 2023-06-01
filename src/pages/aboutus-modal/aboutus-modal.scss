@@ -1,0 +1,20 @@
+page-aboutus-modal {
+
+	ion-header
+	{
+		display: none;
+	}
+
+	ion-content
+	{
+		background: rgba(0,0,0,0.6) !important;
+	}
+	.blue{
+		color: blue!important;
+		text-decoration: none;
+	}
+	.name{
+		color: #dc3135;
+	}
+
+}

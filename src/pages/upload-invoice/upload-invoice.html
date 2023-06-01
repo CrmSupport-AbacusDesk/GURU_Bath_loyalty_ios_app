@@ -1,0 +1,76 @@
+<!--
+  Generated template for the UploadInvoicePage page.
+  
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ ' Upload Invoices' | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form #f="ngForm" (ngSubmit)="f.form.valid && submit()">
+    <div class="cs-heading1 pl0 pb10">
+      <p >Upload Invoice</p>
+    </div>
+    
+    <div class="add-new padding0" >
+      <div class="uplode-image" >
+        <ul>
+          <li *ngFor="let pic of image_data;let i = index;">
+            <img src="{{pic.image_name}}"  >
+            <button (click)="delete(i)"> <i class="material-icons" >clear</i></button>
+          </li>
+          
+          
+          
+          <li (click)="onUploadChange()" >
+            <label>
+              <input type="file" style="display: none;">
+              <div class="other">
+                <a ><i class="material-icons" >camera_alt</i></a>
+              </div>
+            </label>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="enquiry-btn add-btns mt20">
+      <button ion-button block class="h40 green-color" style="letter-spacing: 1px;" [disabled] = "image_data.length==0">
+        <p> Submit</p>
+      </button>
+    </div>
+  </form>
+  
+  
+  
+  <div class="cs-heading1 pl0 pb10" *ngIf="image_data2.length>0" >
+    <p >Uploaded Invoices</p>
+  </div>
+  
+  
+  <div  class="padding16" *ngIf="image_data2.length>0">
+    <div class="grid-layout">
+      <div class="product-data two-column" *ngFor="let pic of image_data2;let i=index">
+        <div class="image-thubmnail">
+          <img src="{{url + pic.bill_name}}" (click) = "viewInvoice(pic.bill_name)" >
+        </div>
+        <div class="content">
+          <h6>{{pic.date_created | date:'d-MMM-y'}}
+            <i class="material-icons" (click)="remove_image(pic.id)">delete</i>
+          </h6>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+</ion-content>

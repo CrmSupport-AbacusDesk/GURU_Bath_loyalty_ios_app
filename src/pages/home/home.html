@@ -1,0 +1,273 @@
+
+
+<!-- Consumer Home Start-->
+<!-- <ion-header  *ngIf="dbService.userStorageData.type == 'Customer'">
+    <ion-toolbar class="secondary-bg">
+        <img src="assets/imgs/logo.png" class="h40 ml16">
+        
+        <ion-buttons end class="mr16">
+            <button ion-button icon-only  (click)="ShareApp()">
+                <ion-icon name="share" color="primary"></ion-icon>
+            </button>
+        </ion-buttons>       
+    </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="dbService.userStorageData.type == 'Customer'">
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+    
+    <ng-container *ngIf="banner.length">
+        <div class="banner" >
+            <ion-slides autoplay=3000 >
+                <ion-slide *ngFor="let list of banner; let i=index">
+                    <img src="{{bannerUrl + list.banner}}">
+                </ion-slide>
+            </ion-slides>
+        </div>
+    </ng-container>
+    
+    <div class="banner" *ngIf="!banner.length">
+        <img src="assets/imgs/banner.png">
+    </div>
+    
+    <div class="product-option">
+        <div class="main-box" (click)="goOnProductPage()">
+            <div class="product-box">
+                <img src="assets/imgs/package.svg">
+            </div>
+            <div class="heading">
+                <h4>{{ 'Product Catalogue' | translate }}</h4>
+            </div>
+            <div class="point">
+                <h3>{{product_count}}</h3>
+            </div>
+            
+        </div>
+        <div class="main-box" (click)="complaintHistory('Service')">
+            <div class="product-box">
+                <img src="assets/imgs/request.svg">
+                
+            </div>
+            <div class="heading">
+                <h4>{{ 'Service Request' | translate}} </h4>
+            </div>
+            <div class="point">
+                <h3>{{complaint_count}}</h3>
+            </div>
+        </div>
+        <div class="main-box" (click)="complaintHistory('Installation')">
+            <div class="product-box">
+                <img src="assets/imgs/server.svg">
+            </div>
+            <div class="heading">
+                <h4>{{ 'Installation Request' | translate}} </h4>
+            </div>
+            <div class="point">
+                <h3>{{installation_count}}</h3>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="group-btn">
+        <button ion-button color="primary" block round *ngIf="!complaint_exist" (click)="goOnComplaintAdd('Service')" class="mb16">
+            {{ 'Add Service Request' | translate }}
+            <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+        <button ion-button color="primary" block round *ngIf="!complaint_exist" (click)="goOnComplaintAdd('Installation')">
+            {{ 'Add Installation Request' | translate }}
+            <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+        <button ion-button color="primary" block round (click)="goToNewArrivals()">
+            {{ 'New Arrivals' | translate }}
+            <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+        <button ion-button color="primary" block round *ngIf="dbService.userStorageData.type != 'Plumber'" (click)="goToNearestDealers('Plumber')">
+            {{ 'Nearest Plumbers' | translate}}
+            <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+        
+        <button ion-button color="primary" block round *ngIf="dbService.userStorageData.type != 'Plumber'" (click)="goToUploadInvoice('Plumber')">
+            {{ 'Upload Invoices ' | translate}}
+            <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+        <a ion-button color="primary" style="margin-bottom:16px !important" block round href="tel:9027322096">
+            {{ 'Customer Care' | translate}}
+            <ion-icon name="call"></ion-icon>
+        </a>
+    </div>
+</ion-content> -->
+
+<!-- Consumer Home End -->
+
+
+<!-- Plumber && Dealer Home Start -->
+
+<ion-header *ngIf="dbService.userStorageData.type == 'Plumber' || dbService.userStorageData.type == 'Dealer'">
+    <ion-toolbar class="secondary-bg">
+        <img src="assets/imgs/logo.png" class="h60 padding10">
+        
+        <ion-buttons end class="mr10">
+            <button ion-button icon-only  (click)="ShareApp()">
+                <ion-icon name="share" color="white"></ion-icon>
+            </button>
+        </ion-buttons>
+        
+        <ion-buttons end class="mr10">
+            <button ion-button icon-only  (click)="goOnnotification()">
+                <ion-icon name="notifications" color="white"></ion-icon>
+                <span class="badge" *ngIf="notification_count > 0">{{notification_count}}</span>
+            </button>
+        </ion-buttons>
+        
+        <ion-buttons end class="mr16"  *ngIf="(dbService.userStorageData.type == 'Plumber' || dbService.userStorageData.type == 'Dealer') && karigar_detail.status=='Verified'">
+            <button ion-button icon-only (click)="scan()">
+                <ion-icon name="qr-scanner" color="white"></ion-icon>
+            </button>
+        </ion-buttons>
+        
+    </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="dbService.userStorageData.type == 'Plumber' || dbService.userStorageData.type == 'Dealer'">
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+    
+    
+    <ng-container *ngIf="banner.length">
+        <div class="banner" >
+            <ion-slides autoplay=3000 >
+                <ion-slide *ngFor="let list of banner; let i=index">
+                    <img src="{{bannerUrl + list.banner}}">
+                </ion-slide>
+            </ion-slides>
+        </div>
+    </ng-container>
+    
+    <div class="home-pint" >
+        <div class="user">
+            <div class="pic">
+                <!-- karigar_detail.profile?karigar_detail.profile: -->
+                <img [src]="karigar_detail.profile? url+karigar_detail.profile:'assets/imgs/profile.jpg'"  >
+            </div>
+            <div class="content" (click)="profile()">
+                <p>{{'Welcome' | translate}},</p>
+                <h4>{{karigar_detail.first_name | titlecase}}</h4>
+                <span>+91 {{karigar_detail.mobile_no}}</span>
+            </div>
+        </div>
+
+
+        <div class="profile-point ">
+            <ul>
+                <li>
+                    <div class="pints">
+                        <h3>{{today_point}}</h3>
+                        <p>{{'Today' | translate}}</p>
+                        <span>{{ 'POINTS' | translate }}</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="pints">
+                        <h3>{{last_point}}</h3>
+                        <p>{{'Last 7 Days' | translate}}</p>
+                        <span>{{ 'POINTS' | translate }}</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="pints">
+                        <!-- <h3>{{conInt(karigar_detail.balance_point) + conInt(karigar_detail.service_wallet_balance_points) + conInt(karigar_detail.referal_point_balance)}}</h3> -->
+                        <h3>{{karigar_detail.total_balance}}</h3>
+                        <p>{{'Balance' | translate}}</p>
+                        <span>{{'POINTS' | translate}}</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- <div class="product-option">
+        <div class="main-box" (click)="goOnProductPage()">
+            <div class="product-box">
+                <img src="assets/imgs/products.png">
+            </div>
+            <div class="heading">
+                <h4>{{'Our Products' | translate}}</h4>
+            </div>
+            <span>{{product_count ? product_count : 0}}</span>
+        </div>
+
+        <div class="main-box"  (click)="goToNewArrivals()">
+            <div class="product-box">
+                <img src="assets/imgs/new_arrival.png">
+            </div>
+            <div class="heading">
+                <h4>{{'New Arrivals' | translate}}</h4>
+            </div>
+        </div>
+
+    </div> -->
+
+    <div class="product-option">
+        <div class="main-box"  (click)="goToVideosPage('Product Installation')">
+            <div class="product-box">
+                <img src="assets/imgs/installation.png">
+                
+            </div>
+            <div class="heading">
+                <h4>{{'Installation Videos' | translate}}</h4>
+            </div>
+        </div>
+
+        <div class="main-box"  (click)="goOnAboutPage()">
+            <div class="product-box">
+                <img src="assets/imgs/info.png">
+                
+            </div>
+            <div class="heading">
+                <h4>{{'About Us' | translate}}</h4>
+            </div>
+        </div>
+    </div>
+    
+    <div class="product-option">
+       
+
+        <div class="main-box sidespace"  (click)="goOnDigitalCatePage()">
+            <div class="product-box">
+                <img src="assets/imgs/pdf.png">
+                
+            </div>
+            <div class="heading">
+                <h4>{{'Pdf Catalogues' | translate}}</h4>
+            </div>
+        </div>
+    </div>
+    <!--     
+        <p *ngIf="offlineService.shouldStartSetUpProcess===true" style="text-align:center">Catalogue Offline Setup:</p>
+        <progress-bar [progress]="offlineService.imagesDownloadProgress" [color]="'#488aff'" *ngIf="offlineService.shouldStartSetUpProcess===true">
+        </progress-bar> -->
+        
+        
+        
+        <div class="group-btn">
+            <!-- <button ion-button color="primary" block round  (click)=" SurveyList()" class="mb16">
+                {{'Survey' | translate}} 
+                <ion-icon name="arrow-forward"></ion-icon>
+            </button> -->
+            <a ion-button color="primary" block round  href="tel:8527045250" >
+                {{'Customer Care' | translate}}
+                <ion-icon name="call" class="fix-icon"></ion-icon>
+            </a>
+        </div>
+        
+        
+        <div class="h50">&nbsp;</div>
+    </ion-content>
+    <!-- Plumber && Dealer -->
+    

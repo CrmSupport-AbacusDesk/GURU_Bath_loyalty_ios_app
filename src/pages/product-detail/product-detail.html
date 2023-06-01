@@ -1,0 +1,69 @@
+
+<ion-header class="main-header remove" >
+    <ion-navbar >
+        <ion-title *ngIf="!filter.globalSearchData" >{{prod_cat.main_category |titlecase}} </ion-title>
+        <ion-title *ngIf="filter.globalSearchData" >{{filter.categoryName | titlecase}} - Product List</ion-title>
+    </ion-navbar>
+    <ion-toolbar>
+        <div class="search add-search">
+            <div class="filter">
+                <ion-searchbar type='text' placeholder="{{ 'Search' | translate }}" name='search'  [(ngModel)]="filter.search" (ngModelChange)="filter.search=='' ? getProductList(cat_id,filter.search) : ''" (keyup.enter)="getProductList(cat_id,filter.search)"></ion-searchbar>
+            </div>
+
+        </div>
+    </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="listing grid-listing sub-category">
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+
+    <div *ngIf="no_rec" class="data-not">
+        <img src="assets/imgs/data-not-found.png">
+    </div>
+
+    <div *ngIf="prod_list.length" class="main-div">
+        <div class="sub-listing tydo-list p0">
+            <!-- <div class="tydo-item">
+                <h3>{{prod_cat.category_name}}<br><span>"{{prod_list.length}}/{{total_count}}" Products Found</span> </h3>
+                <img *ngIf="prod_cat.subcat_image" src="{{prod_cat.subcat_image}}"> -->
+                <!-- <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2NjIpLCBxdWFsaXR5ID0gODAK/9sAQwAGBAUGBQQGBgUGBwcGCAoQCgoJCQoUDg8MEBcUGBgXFBYWGh0lHxobIxwWFiAsICMmJykqKRkfLTAtKDAlKCko/9sAQwEHBwcKCAoTCgoTKBoWGigoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgo/8AAEQgBLAEoAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A+qKKKKACiiigAooooAKKKKACgnA5qK4mS3heWQ4VRk1zV9qc96xSItFD6A8t9aANe+1m3t/ljImk/uqePzrJn1e9uFKoFhB7rnP51VjgVRU4UUgK5Nw/+snmY+7mmrbk8sSTVsDFOFAECI6fckkX6NirUF7dwHiQyD0kyaaBzTto9KANK11ZZGC3C+Wf72eK01YMMqQR6g1zRQGp7S4kt24OU7rTA36Kit5lmjDL+I9KloAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKhurmO1hMkzYUfrS3NxHbRGSZgqj9fauVup5L6cyy8KOFTPAoALu5lv5Q0vCL91R2FKigADihV9KfikAAUtFKKAAUooHWnUwFxzS0UooAQU4Y70lFAFm1lML5Xp3Fa8TiRAymsRDmrtpLsbB+6aANGigciigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKa7qiFnICgZJNOrn9cvDPJ9miPyL9/3PpQBV1G6a+uMjIhQ/KD396jUYHFIq4GKeKQABThSd6dQAUopKBTAWnCm0ooAfSimg04UgClNJSimAqnBqxGeKrVLCaANa1fcmD2qes+2fa9aFAgooooGFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUjsFUsxwAMk0AUNZvPstvtQjzn4Ueg9a56JMD370+4uGvbkzOCB0UegoHWkAopwpFFLQAtLRRQgCgUUCmAtKKSgUAPpRTRTqAHUd6SloAO9OQ4NJQKALcR6GtOFt0YPesmI8VftW5x60CLVFFFAwooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACsfxDclIVt0PMn3v92td2CqzMcKBkmuSnkNxdyzH+I8fSgBqjAp9J7Uv4UgHClpKUUAFLSUtABRRRTAUdKKSlFADqUUgpRQA4UtIKXvQAe1LSUtAEkR5q7CcMDWevBq7EenpQBpjpRTIjlBT6ACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAztdnEVk0YPzyfKPz5rBQYUCrmtSia/Cj/lmNp+tVAKQCilPUUg4NKO2KAFooooAXrRSUtAC0UgpaAAUtIKWmAo6U6minCgBadTaWgBaWkooAUHmrUB6VVqeA0AalscqRU1VrY84qzQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFIeAc9KWqupymCxmkHUDH58UAc2WMk0kp6uxb86XvTVGFFO9KQAetO7U0inUAFFJSg0ABpRSUtAC0UUUAFLSUtMBRThTRS0AOpaQUDrQAtKOlJS0AFTQHmoKkgPzUAadsfmFXKo25ww+tXqACiiigAooooAKKKKACiiigAooooAKKKKACiiigArN19gLAr3ZgP61pVj+IW+SFP8Aaz+lAGSKUUClHWgAHNAo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" /> -->
+                <!-- <img *ngIf="!prod_cat.subcat_image" src="assets/imgs/no-thumbnail.jpg"> -->
+            <!-- </div> -->
+
+            <ion-list (click)="goOnProductSubDetailPage(list.id)" *ngFor="let list of prod_list;let i=index">
+                <button ion-item>
+                    <div class="image-manage">                        
+                        <img *ngIf="list.actual_image_name" src="{{url + list.actual_image_name}}">
+                        <i class="material-icons" *ngIf="!list.actual_image_name">perm_media</i>
+                        <!-- <img *ngIf="!list.image" src="assets/imgs/no-thumbnail.jpg" > -->
+                        
+                    </div>
+                    <div class="detail">
+                        <h4>{{list.product_name}} ({{list.material_code}})</h4>
+                        <h3 class="m0"><span>₹​</span>{{list.price}}/-</h3>
+                    </div>
+                </button>
+            </ion-list>
+        </div>
+        <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" *ngIf="flag!=1">
+            <!-- <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+            </ion-infinite-scroll-content> -->
+            <div class="sub-listing tydo-list p0">
+                <ion-list class="skleton-box-2" *ngFor="let row of skelton"></ion-list>
+            </div>
+        </ion-infinite-scroll>
+    </div>
+
+    <!-- <div class="main-div" *ngIf="!prod_list.length && flag!=1">
+        <div class="sub-listing tydo-list p0">
+            <div class="skleton-box-1"></div>
+
+            <ion-list class="skleton-box-2" *ngFor="let row of skelton"></ion-list>
+        </div>
+    </div> -->
+</ion-content>
